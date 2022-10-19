@@ -32,5 +32,12 @@ public class World {
         strToEnum(args, kierunki, l);
         run(kierunki);
         System.out.println("stop");
+        Animal zwierzak = new Animal();
+        System.out.println(zwierzak);
+        zwierzak.move(MoveDirection.RIGHT);
+        //zwierzak.move(MoveDirection.FORWARD);
+        //zwierzak.move(MoveDirection.FORWARD);
+        //zwierzak.move(MoveDirection.FORWARD);
+        //System.out.println(zwierzak);
     }
 }
