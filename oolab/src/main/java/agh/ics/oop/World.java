@@ -34,10 +34,11 @@ public class World {
         System.out.println("stop");
         Animal zwierzak = new Animal();
         System.out.println(zwierzak);
-        zwierzak.move(MoveDirection.RIGHT);
-        //zwierzak.move(MoveDirection.FORWARD);
-        //zwierzak.move(MoveDirection.FORWARD);
-        //zwierzak.move(MoveDirection.FORWARD);
-        //System.out.println(zwierzak);
+        String[] moves = new String[] {"r", "r", "r", "r"};
+        MoveDirection[] options = new OptionParser().parser(moves);
+        for (MoveDirection option: options){
+            zwierzak.move(option);
+        }
+        System.out.println(zwierzak);
     }
 }
