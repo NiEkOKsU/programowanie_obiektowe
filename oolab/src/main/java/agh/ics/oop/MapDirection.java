@@ -13,20 +13,20 @@ public enum MapDirection {
             case EAST -> "Wschod";
         };
     }
-    public String next(){
+    public MapDirection next(){
         return switch (this) {
-            case NORTH -> "Wschod";
-            case SOUTH -> "Zachod";
-            case WEST -> "Polnoc";
-            case EAST -> "Poludnie";
+            case NORTH -> MapDirection.EAST;
+            case SOUTH -> MapDirection.WEST;
+            case WEST -> MapDirection.NORTH;
+            case EAST -> MapDirection.SOUTH;
         };
     }
-    public String previous(){
+    public MapDirection previous(){
         return switch (this) {
-            case NORTH -> "Zachod";
-            case SOUTH -> "Wschod";
-            case WEST -> "Poludnie";
-            case EAST -> "Polnoc";
+            case NORTH -> MapDirection.WEST;
+            case SOUTH -> MapDirection.EAST;
+            case WEST -> MapDirection.SOUTH;
+            case EAST -> MapDirection.NORTH;
         };
     }
 
@@ -34,8 +34,8 @@ public enum MapDirection {
         return switch (this) {
             case NORTH -> new int[] {0, 1};
             case SOUTH -> new int[] {0, -1};
-            case WEST -> new int[] {1, 0};
-            case EAST -> new int[] {-1, 0};
+            case WEST -> new int[] {-1, 0};
+            case EAST -> new int[] {1, 0};
         };
     }
 

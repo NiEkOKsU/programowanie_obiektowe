@@ -34,7 +34,7 @@ public class World {
         System.out.println("stop");
         Animal zwierzak = new Animal();
         System.out.println(zwierzak);
-        String[] moves = new String[] {"r", "r", "r", "r"};
+        String[] moves = new String[] {"f", "f", "f", "f"};
         MoveDirection[] options = new OptionParser().parser(moves);
         for (MoveDirection option: options){
             zwierzak.move(option);
