@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnimalTest {
     @Test
     void tests(){
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal();
-        Animal animal3 = new Animal();
-        Animal animal4 = new Animal();
-        Animal animal5 = new Animal();
+        Animal animal1 = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
+        Animal animal2 = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
+        Animal animal3 = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
+        Animal animal4 = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
+        Animal animal5 = new Animal(new RectangularMap(4,4), new Vector2d(2, 2));
 
 
         animal1.move(MoveDirection.LEFT);
@@ -39,7 +39,7 @@ class AnimalTest {
         animal4.move(MoveDirection.FORWARD);
 
         String[] moves = new String[] {"f", "f", "r", "r", "f", "f", "f", "f", "r", "r"};
-        MoveDirection[] options = new OptionParser().parser(moves);
+        MoveDirection[] options = OptionsParser.parse(moves);
         for (MoveDirection option: options){
             animal5.move(option);
         }
