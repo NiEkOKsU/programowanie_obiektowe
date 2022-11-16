@@ -28,18 +28,12 @@ public class RectangularMap implements IWorldMap {
 
 
     public boolean canMoveTo(Vector2d position) {
-        for(Animal animal: animals){
-            if(Objects.equals(animal.getPosition(), position)){
-                return false;
-            }
-        }
-        return Objects.equals(mapUpperRight, mapUpperRight.upperRight(position))
-                && Objects.equals(mapLowerLeft, mapLowerLeft.lowerLeft(position));
+        return position.follows(mapLowerLeft) && position.precedes(mapUpperRight) && !isOccupied(position);
     }
 
 
     public boolean place(Animal animal) {
-        if(!isOccupied(animal.getPosition()) && canMoveTo(animal.getPosition())){
+        if(this.canMoveTo(animal.getPosition())){
             animals.add(animal);
             return true;
         }
@@ -48,12 +42,7 @@ public class RectangularMap implements IWorldMap {
 
 
     public boolean isOccupied(Vector2d position) {
-        for(Animal animal: animals){
-            if(Objects.equals(animal.getPosition(), position)){
-                return true;
-            }
-        }
-        return false;
+        return this.objectAt(position) != null;
     }
 
 
