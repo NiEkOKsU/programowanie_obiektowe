@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GrassField extends AbstractWorldMap{
-    private List<Vector2d> grassList = new ArrayList<>();
+    private List<Grass> grassList = new ArrayList<>();
 
     public GrassField(int grassAmmount) {
         super(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE),new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
@@ -28,14 +28,13 @@ public class GrassField extends AbstractWorldMap{
 
     public boolean placeGrassOnCoordinates(Vector2d grassPosition){
         if(!isOccupiedByGrass(grassPosition)){
-            grassList.add(grassPosition);
+            grassList.add(new Grass(grassPosition));
             return true;
         }
         return false;
     }
 
     public boolean isOccupiedByGrass(Vector2d position) {
-
         return grassList.stream().anyMatch(el -> el.equals(position));
     }
 
@@ -45,30 +44,33 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public boolean canMoveTo(Vector2d position) {
+        updateMapSize();
         return !isOccupiedByAnimal(position);
     }
 
     public Object objectAt(Vector2d position) {
+        updateMapSize();
         for (Animal animal : animals) {
             if (Objects.equals(animal.getPosition(), position)) {
                 return animal;
             }
         }
-        for (Vector2d grass : grassList) {
-            if (Objects.equals(grass, position)) {
+        for (Grass grass : grassList) {
+            if (Objects.equals(grass.getPosition(), position)) {
                 return grass;
             }
         }
         return null;
     }
+
     private void updateMapSize(){
-        for (Vector2d position : grassList) {
-            mapLowerLeft = mapLowerLeft.lowerLeft(position);
-            mapUpperRight = mapUpperRight.upperRight(position);
+        for (Grass grass : grassList) {
+            mapLowerLeft = mapUpperRight.lowerLeft(grass.getPosition());
+            mapUpperRight = mapLowerLeft.upperRight(grass.getPosition());
         }
         for (Animal animal : animals) {
-            mapLowerLeft = mapLowerLeft.lowerLeft(animal.getPosition());
-            mapUpperRight = mapUpperRight.upperRight(animal.getPosition());
+            mapLowerLeft = mapUpperRight.lowerLeft(animal.getPosition());
+            mapUpperRight = mapLowerLeft.upperRight(animal.getPosition());
         }
     }
 
