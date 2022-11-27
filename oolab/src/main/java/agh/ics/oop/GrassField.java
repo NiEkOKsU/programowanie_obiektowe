@@ -1,16 +1,12 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GrassField extends AbstractWorldMap{
-    private List<Grass> grassList = new ArrayList<>();
+    private final Map<Vector2d, Grass> grassList = new HashMap<>();
 
     public GrassField(int grassAmmount) {
-        super(new Vector2d(Integer.MIN_VALUE,Integer.MIN_VALUE),new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
         placeGrass(grassAmmount);
-        updateMapSize();
     }
 
     private int genRandomInt(double max){
@@ -28,50 +24,58 @@ public class GrassField extends AbstractWorldMap{
 
     public boolean placeGrassOnCoordinates(Vector2d grassPosition){
         if(!isOccupiedByGrass(grassPosition)){
-            grassList.add(new Grass(grassPosition));
+            grassList.put(grassPosition, new Grass(grassPosition));
             return true;
         }
         return false;
     }
 
     public boolean isOccupiedByGrass(Vector2d position) {
-        return grassList.stream().anyMatch(el -> el.equals(position));
+        return grassList.containsKey(position);
     }
 
     public boolean isOccupiedByAnimal(Vector2d position) {
-        return animals.stream().anyMatch(el -> el.getPosition().equals(position));
+        return animals.containsKey(position);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        updateMapSize();
         return !isOccupiedByAnimal(position);
     }
 
     public Object objectAt(Vector2d position) {
-        updateMapSize();
-        for (Animal animal : animals) {
-            if (Objects.equals(animal.getPosition(), position)) {
-                return animal;
-            }
+        if(isOccupiedByGrass(position)){
+            return grassList.get(position);
         }
-        for (Grass grass : grassList) {
-            if (Objects.equals(grass.getPosition(), position)) {
-                return grass;
-            }
+        if(isOccupiedByAnimal(position)){
+            return animals.get(position);
         }
         return null;
     }
 
-    private void updateMapSize(){
-        for (Grass grass : grassList) {
-            mapLowerLeft = mapUpperRight.lowerLeft(grass.getPosition());
-            mapUpperRight = mapLowerLeft.upperRight(grass.getPosition());
+    @Override
+    protected Vector2d calcLowerBound() {
+        Vector2d lowerBound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        for (Vector2d position : grassList.keySet()) {
+            lowerBound = lowerBound.lowerLeft(position);
         }
-        for (Animal animal : animals) {
-            mapLowerLeft = mapUpperRight.lowerLeft(animal.getPosition());
-            mapUpperRight = mapLowerLeft.upperRight(animal.getPosition());
+        for(Vector2d position : animals.keySet()){
+            lowerBound = lowerBound.lowerLeft(position);
         }
+        return lowerBound;
     }
+
+    @Override
+    protected Vector2d calcUpperBound() {
+        Vector2d upperBound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        for (Vector2d position : grassList.keySet()) {
+            upperBound = upperBound.upperRight(position);
+        }
+        for(Vector2d position : animals.keySet()){
+            upperBound = upperBound.upperRight(position);
+        }
+        return upperBound;
+    }
+
 
 }

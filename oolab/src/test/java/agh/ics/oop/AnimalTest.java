@@ -44,7 +44,6 @@ class AnimalTest {
             animal5.move(option);
         }
 
-
         assertEquals(MapDirection.WEST, animal1.getDirection());
         assertEquals(new Vector2d(2, 2), animal1.getPosition());
         assertEquals(MapDirection.NORTH, animal2.getDirection());

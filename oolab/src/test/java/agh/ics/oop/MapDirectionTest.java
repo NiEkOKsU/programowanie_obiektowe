@@ -8,25 +8,25 @@ class MapDirectionTest {
     @Test
     void nextCheck(){
         MapDirection south = MapDirection.SOUTH;
-        assertEquals(south.next(), "Zachod");
+        assertEquals(south.next(), MapDirection.WEST);
         MapDirection north = MapDirection.NORTH;
-        assertEquals(north.next(), "Wschod");
+        assertEquals(north.next(), MapDirection.EAST);
         MapDirection east = MapDirection.EAST;
-        assertEquals(east.next(), "Poludnie");
+        assertEquals(east.next(), MapDirection.SOUTH);
         MapDirection west = MapDirection.WEST;
-        assertEquals(west.next(), "Polnoc");
+        assertEquals(west.next(), MapDirection.NORTH);
     }
 
 
     @Test
     void prevCheck(){
         MapDirection south = MapDirection.SOUTH;
-        assertEquals(south.previous(), "Wschod");
+        assertEquals(south.previous(), MapDirection.EAST);
         MapDirection north = MapDirection.NORTH;
-        assertEquals(north.previous(), "Zachod");
+        assertEquals(north.previous(), MapDirection.WEST);
         MapDirection east = MapDirection.EAST;
-        assertEquals(east.previous(), "Polnoc");
+        assertEquals(east.previous(), MapDirection.NORTH);
         MapDirection west = MapDirection.WEST;
-        assertEquals(west.previous(), "Poludnie");
+        assertEquals(west.previous(), MapDirection.SOUTH);
     }
 }

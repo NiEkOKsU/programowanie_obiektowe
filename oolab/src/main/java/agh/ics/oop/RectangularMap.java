@@ -6,8 +6,14 @@ import java.util.Objects;
 
 public class RectangularMap extends AbstractWorldMap {
 
+    private final Vector2d lowerLeft;
+
+    private final Vector2d upperRight;
+
     public RectangularMap(int width, int height, int leftX, int leftY) {
-        super(new Vector2d(leftX,leftY),new Vector2d(width,height));
+        super();
+        lowerLeft = new Vector2d(leftX,leftY);
+        upperRight = new Vector2d(width,height);
     }
 
     public RectangularMap(int mapWidth, int mapHeight) {
@@ -16,15 +22,27 @@ public class RectangularMap extends AbstractWorldMap {
 
 
     public boolean canMoveTo(Vector2d position) {
-        return position.follows(mapLowerLeft) && position.precedes(mapUpperRight) && !isOccupied(position);
+        return position.follows(lowerLeft) && position.precedes(upperRight) && !isOccupied(position);
     }
 
+    public Vector2d calcLowerBound(){
+        return this.lowerLeft;
+    }
+
+    public Vector2d calcUpperBound(){
+        return this.lowerLeft;
+    }
+
+    @Override
+    public boolean isOccupied(Vector2d position) {
+        return (lowerLeft.equals(lowerLeft.lowerLeft(position))
+                && upperRight.equals(upperRight.upperRight(position))
+                && super.isOccupied(position));
+    }
 
     public Object objectAt(Vector2d position) {
-        for (Animal animal : animals) {
-            if (Objects.equals(animal.getPosition(), position)) {
-                return animal;
-            }
+        if(animals.containsKey(position)){
+            return animals.get(position);
         }
         return null;
     }
