@@ -47,14 +47,11 @@ public class GrassField extends AbstractWorldMap{
         if(isOccupiedByGrass(position)){
             return grassList.get(position);
         }
-        if(isOccupiedByAnimal(position)){
-            return animals.get(position);
-        }
-        return null;
+        return animals.get(position);
     }
 
     @Override
-    protected Vector2d calcLowerBound() {
+    public Vector2d calcLowerBound() {
         Vector2d lowerBound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         for (Vector2d position : grassList.keySet()) {
             lowerBound = lowerBound.lowerLeft(position);
@@ -66,7 +63,7 @@ public class GrassField extends AbstractWorldMap{
     }
 
     @Override
-    protected Vector2d calcUpperBound() {
+    public Vector2d calcUpperBound() {
         Vector2d upperBound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
         for (Vector2d position : grassList.keySet()) {
             upperBound = upperBound.upperRight(position);

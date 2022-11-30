@@ -1,9 +1,5 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 public class RectangularMap extends AbstractWorldMap {
 
     private final Vector2d lowerLeft;
@@ -41,9 +37,6 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     public Object objectAt(Vector2d position) {
-        if(animals.containsKey(position)){
-            return animals.get(position);
-        }
-        return null;
+        return animals.get(position);
     }
 }

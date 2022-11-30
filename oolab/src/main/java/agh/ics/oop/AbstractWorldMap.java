@@ -22,11 +22,11 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             animals.put(animal.getPosition(), animal);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("You cannot place another animal on " + animal.getPosition());
     }
 
-    protected abstract Vector2d calcLowerBound();
-    protected abstract Vector2d calcUpperBound();
+    public abstract Vector2d calcLowerBound();
+    public abstract Vector2d calcUpperBound();
 
     @Override
     public String toString() {

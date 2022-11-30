@@ -66,6 +66,13 @@ public class Vector2d {
         return Objects.hash(x, y);
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
     public static void main(String[] args){
         Vector2d position1 = new Vector2d(1,2);
         System.out.println(position1);
