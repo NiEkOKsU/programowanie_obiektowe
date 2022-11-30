@@ -5,18 +5,20 @@ import java.util.Objects;
 public class Animal {
     private MapDirection direction;
     private Vector2d position;
-
     private IWorldMap map;
 
+    public Animal(){
+        this(new RectangularMap(4,4));
+    }
+
     public Animal(IWorldMap map){
-        new Animal(map, new Vector2d(2,2));
+        this(map, new Vector2d(2,2));
     }
 
     public Animal(IWorldMap map, Vector2d position) {
         this.direction = MapDirection.NORTH;
         this.position = position;
         this.map = map;
-
     }
 
     public Vector2d getPosition() {
