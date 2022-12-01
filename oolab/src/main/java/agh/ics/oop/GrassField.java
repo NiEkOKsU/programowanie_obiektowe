@@ -26,7 +26,7 @@ public class GrassField extends AbstractWorldMap{
         }
     }
 
-    public boolean placeGrassOnCoordinates(Vector2d grassPosition){
+    private boolean placeGrassOnCoordinates(Vector2d grassPosition){
         if(!isOccupiedByGrass(grassPosition)){
             grassList.add(new Grass(grassPosition));
             return true;

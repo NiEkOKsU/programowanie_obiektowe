@@ -5,8 +5,8 @@ import java.util.List;
 
 public abstract class AbstractWorldMap implements IWorldMap {
     protected final List<Animal> animals;
-    public Vector2d mapLowerLeft;
-    public Vector2d mapUpperRight;
+    protected Vector2d mapLowerLeft;
+    protected Vector2d mapUpperRight;
     protected final MapVisualizer mapVisualizer;
 
     protected AbstractWorldMap(Vector2d leftBottom, Vector2d rightTop) {
