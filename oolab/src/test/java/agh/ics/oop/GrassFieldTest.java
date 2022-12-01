@@ -39,4 +39,5 @@ class GrassFieldTest {
         Assertions.assertEquals(animal1,this.map.objectAt(new Vector2d(2,3)));
         Assertions.assertEquals(animal2,this.map.objectAt(new Vector2d(4,5)));
     }
+
 }
