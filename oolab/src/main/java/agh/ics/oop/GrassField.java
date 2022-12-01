@@ -52,12 +52,26 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public Vector2d calcLowerBound() {
-        return this.mapBoundary.getLowerLeft();
+        Vector2d lowerBound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
+        for (Vector2d position : grassList.keySet()) {
+            lowerBound = lowerBound.lowerLeft(position);
+        }
+        for(Vector2d position : animals.keySet()){
+            lowerBound = lowerBound.lowerLeft(position);
+        }
+        return lowerBound;
     }
 
     @Override
     public Vector2d calcUpperBound() {
-        return this.mapBoundary.getUpperRight();
+        Vector2d upperBound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        for (Vector2d position : grassList.keySet()) {
+            upperBound = upperBound.upperRight(position);
+        }
+        for(Vector2d position : animals.keySet()){
+            upperBound = upperBound.upperRight(position);
+        }
+        return upperBound;
     }
 
 
