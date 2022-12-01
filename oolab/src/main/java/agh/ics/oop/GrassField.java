@@ -9,25 +9,24 @@ public class GrassField extends AbstractWorldMap{
         placeGrass(grassAmmount);
     }
 
-    private int genRandomInt(double max){
-        return (int)Math.floor(Math.random()*(max +1));
-    }
 
-    public void placeGrass(int grassAmmount){
-        Vector2d grass = new Vector2d(genRandomInt(Math.sqrt(10*grassAmmount)), genRandomInt(Math.sqrt(10*grassAmmount)));
-        for(int i=0;i<grassAmmount;++i){
-            while(!placeGrassOnCoordinates(grass)){
-                grass=new Vector2d(genRandomInt(Math.sqrt(10*grassAmmount)), genRandomInt(Math.sqrt(10*grassAmmount)));
+    private void placeGrass(int grassAmmount){
+        ArrayList<Vector2d> grassPositions = new ArrayList<>();
+        int bound = (int) Math.sqrt(10 * grassAmmount);
+        for (int i = 0; i < bound; i++) {
+            for (int j = 0; j < bound; j++) {
+                grassPositions.add(new Vector2d(i, j));
+                mapBoundary.updateMapBoundary(new Vector2d(i, j));
             }
         }
-    }
 
-    public boolean placeGrassOnCoordinates(Vector2d grassPosition){
-        if(!isOccupiedByGrass(grassPosition)){
+        Random random = new Random();
+        for (int i = 0; i < grassAmmount; ++i) {
+            int randomIndex = random.nextInt(grassPositions.size());
+            Vector2d grassPosition = grassPositions.get(randomIndex);
             grassList.put(grassPosition, new Grass(grassPosition));
-            return true;
+            grassPositions.remove(grassPosition);
         }
-        return false;
     }
 
     public boolean isOccupiedByGrass(Vector2d position) {
@@ -52,26 +51,12 @@ public class GrassField extends AbstractWorldMap{
 
     @Override
     public Vector2d calcLowerBound() {
-        Vector2d lowerBound = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        for (Vector2d position : grassList.keySet()) {
-            lowerBound = lowerBound.lowerLeft(position);
-        }
-        for(Vector2d position : animals.keySet()){
-            lowerBound = lowerBound.lowerLeft(position);
-        }
-        return lowerBound;
+        return mapBoundary.getLowerLeft();
     }
 
     @Override
     public Vector2d calcUpperBound() {
-        Vector2d upperBound = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        for (Vector2d position : grassList.keySet()) {
-            upperBound = upperBound.upperRight(position);
-        }
-        for(Vector2d position : animals.keySet()){
-            upperBound = upperBound.upperRight(position);
-        }
-        return upperBound;
+        return mapBoundary.getUpperRight();
     }
 
 
