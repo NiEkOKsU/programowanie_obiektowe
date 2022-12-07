@@ -17,11 +17,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return this.objectAt(position) != null;
     }
 
-    public boolean place(Animal animal) {
+    public void place(Animal animal) {
         if(this.canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(), animal);
             mapBoundary.updateMapBoundary(animal.getPosition());
-            return true;
         }
         throw new IllegalArgumentException("You cannot place another animal on " + animal.getPosition());
     }

@@ -10,9 +10,7 @@ public class SimulationEngine implements IEngine{
         this.directions=directions;
         for (Vector2d currPosition: initialAnimalsPositions){
             Animal animal=new Animal(map, currPosition);
-            if(map.place(animal)){
-                animals.add(animal);
-            }
+            animals.add(animal);
         }
     }
     @Override
