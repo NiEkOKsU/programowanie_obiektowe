@@ -53,15 +53,18 @@ public class Vector2d {
     }
 
 
-    public boolean equals(Object  other){
-        if (this == other)
-            return true;
-        if (!(other instanceof Vector2d))
-            return false;
-        return this.x == ((Vector2d) other).x && this.y == ((Vector2d) other).y;
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Vector2d vector2dOther) {
+            return (x == vector2dOther.x && y == vector2dOther.y);
+        }
+        return false;
     }
 
-    public int hashCode() {return Objects.hash(x, y);}
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 
     public static void main(String[] args){
         Vector2d position1 = new Vector2d(1,2);
