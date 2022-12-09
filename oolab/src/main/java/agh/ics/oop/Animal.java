@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Animal {
+public class Animal implements IMapElement {
     private MapDirection direction;
     private Vector2d position;
     private IWorldMap map;
     private List<IPositionChangeObserver> observers = new ArrayList<>();
-
-    public Animal(){
-        this(new RectangularMap(4,4));
-    }
 
     public Animal(IWorldMap map){
         this(map, new Vector2d(2,2));
@@ -22,7 +18,6 @@ public class Animal {
         this.direction = MapDirection.NORTH;
         this.position = position;
         this.map = map;
-        addObserver(map);
     }
 
     public Vector2d getPosition() {
@@ -38,7 +33,12 @@ public class Animal {
     public String toString() {
         return Character.toString(direction.name().charAt(0));
     }
-
+    public String getImagePath(){
+        return toString();
+    }
+    public String getDesc(){
+        return "Z " + position.toString();
+    }
     public boolean isAt(Vector2d checkPosition){
         return Objects.equals(position, checkPosition);
     }
@@ -58,14 +58,12 @@ public class Animal {
             position = newVector;
         }
     }
-
-    void removeObserver(IPositionChangeObserver observer) {
+    public void removeObserver(IPositionChangeObserver observer) {
         observers.remove(observer);
     }
-    void addObserver(IPositionChangeObserver observer) {
+    public void addObserver(IPositionChangeObserver observer) {
         observers.add(observer);
     }
-
     void positionChanged(Vector2d oldPosition, Vector2d newPosition){
         for (IPositionChangeObserver observer : observers){
             observer.positionChanged(oldPosition, newPosition);

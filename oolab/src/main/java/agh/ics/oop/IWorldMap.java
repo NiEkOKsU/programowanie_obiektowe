@@ -24,7 +24,7 @@ public interface IWorldMap extends IPositionChangeObserver {
      *            The animal to place on the map.
      * @return True if the animal was placed. The animal cannot be placed if the map is already occupied.
      */
-    void place(Animal animal);
+    boolean place(Animal animal);
 
     /**
      * Return true if given position on the map is occupied. Should not be
@@ -46,5 +46,7 @@ public interface IWorldMap extends IPositionChangeObserver {
      */
     Object objectAt(Vector2d position);
 
-
+    default boolean isOccupiedByGrass(Vector2d position){
+        return false;
+    }
 }

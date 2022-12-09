@@ -21,7 +21,10 @@ public class MapBoundary implements IPositionChangeObserver {
         return new Vector2d(X.last().getX(),Y.last().getY());
     }
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
-        removeMapBoundary(oldPosition);
-        updateMapBoundary(newPosition);
+        System.out.println(oldPosition);
+        X.remove(oldPosition);
+        Y.remove(oldPosition);
+        X.add(newPosition);
+        Y.add(newPosition);
     }
 }
