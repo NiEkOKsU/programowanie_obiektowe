@@ -22,7 +22,7 @@ public class Animal {
         this.direction = MapDirection.NORTH;
         this.position = position;
         this.map = map;
-        addObserver((IPositionChangeObserver) map);
+        addObserver(map);
     }
 
     public Vector2d getPosition() {
