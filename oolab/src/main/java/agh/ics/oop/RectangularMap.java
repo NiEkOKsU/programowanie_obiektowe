@@ -18,7 +18,9 @@ public class RectangularMap extends AbstractWorldMap {
 
 
     public boolean canMoveTo(Vector2d position) {
-        return position.follows(lowerLeft) && position.precedes(upperRight) && !isOccupied(position);
+        return (lowerLeft.equals(lowerLeft.lowerLeft(position))
+                && upperRight.equals(upperRight.upperRight(position))
+                && !animals.containsKey(position));
     }
 
     public Vector2d calcLowerBound(){
@@ -26,7 +28,7 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     public Vector2d calcUpperBound(){
-        return this.lowerLeft;
+        return this.upperRight;
     }
 
     @Override
@@ -36,7 +38,8 @@ public class RectangularMap extends AbstractWorldMap {
                 && super.isOccupied(position));
     }
 
-    public Object objectAt(Vector2d position) {
+    public IMapElement objectAt(Vector2d position) {
         return animals.get(position);
     }
+
 }

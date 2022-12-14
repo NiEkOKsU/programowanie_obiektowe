@@ -1,25 +1,59 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
-import java.util.List;
+import agh.ics.oop.gui.App;
 
-public class SimulationEngine implements IEngine{
+public class SimulationEngine implements IEngine, Runnable{
     private final MoveDirection[] directions;
-    private final List<Animal> animals= new ArrayList<>();
-    public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] initialAnimalsPositions){
-        this.directions=directions;
-        for (Vector2d currPosition: initialAnimalsPositions){
-            Animal animal=new Animal(map, currPosition);
-            if(map.place(animal)){
-                animals.add(animal);
+    private final IWorldMap map;
+    private final Vector2d[] positions;
+    private int moveDelay;
+    private App app;
+
+    public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] positions) {
+        this.directions = directions;
+        this.map = map;
+        this.positions = positions;
+
+        for (Vector2d position : positions) {
+            map.place(new Animal(map, position));
+            if(map.isOccupiedByGrass(position)){
+                ((GrassField)map).eatGrass(position);
             }
         }
     }
+    public SimulationEngine(MoveDirection[] moveDirections, IWorldMap map, Vector2d[] animalsVectors, int moveDelay, App app){
+        this(moveDirections, map, animalsVectors);
+        this.app = app;
+        this.moveDelay = moveDelay;
+    }
+
+    public Animal getAnimal(int i) {
+        return (Animal) map.objectAt(positions[i]);
+    }
+
     @Override
     public void run() {
-        int numbersOfAnimals=animals.size();
-        for (int i=0;i<directions.length;i++){
-            animals.get(i%numbersOfAnimals).move(directions[i]);
+
+        System.out.println();
+
+        int i = 0;
+        int n = positions.length;
+        System.out.println(map);
+        for (MoveDirection direction : directions) {
+            Animal currentAnimal = (Animal) map.objectAt(positions[i % n]);
+            if(currentAnimal != null) {
+                currentAnimal.move(direction);
+                positions[i % n] = currentAnimal.getPosition();
+                i += 1;
+            }
+            app.refreshMap();
+            System.out.println(map);
+            try{
+                Thread.sleep(moveDelay);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

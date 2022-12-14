@@ -46,5 +46,7 @@ public interface IWorldMap extends IPositionChangeObserver {
      */
     Object objectAt(Vector2d position);
 
-
+    default boolean isOccupiedByGrass(Vector2d position){
+        return false;
+    }
 }

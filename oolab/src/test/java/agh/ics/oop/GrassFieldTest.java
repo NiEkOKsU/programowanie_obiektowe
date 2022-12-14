@@ -13,13 +13,15 @@ class GrassFieldTest {
         Assertions.assertFalse(this.map.canMoveTo(new Vector2d(2,2)));
         Assertions.assertTrue(this.map.canMoveTo(new Vector2d(0,1)));
         Assertions.assertTrue(this.map.canMoveTo(new Vector2d(-1,2)));
-        System.out.println(map);
     }
     @Test
     void place(){
         Assertions.assertTrue(this.map.place(new Animal(this.map,new Vector2d(3,3))));
         Assertions.assertTrue(this.map.place(new Animal(this.map,new Vector2d(2,6))));
-        Assertions.assertFalse(this.map.place(new Animal(this.map,new Vector2d(3,3))));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.map.place(new Animal(this.map,new Vector2d(3,3)));
+        });
+        Assertions.assertEquals("You cannot place another animal on (3,3)", exception.getMessage());
     }
     @Test
     void isOccupied(){
@@ -28,7 +30,6 @@ class GrassFieldTest {
         Assertions.assertTrue(this.map.isOccupied(new Vector2d(2,3)));
         Assertions.assertTrue(this.map.isOccupied(new Vector2d(7,3)));
         Assertions.assertFalse(this.map.isOccupied(new Vector2d(-1,3)));
-        System.out.println(map);
     }
     @Test
     void objectAt(){
